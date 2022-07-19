@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using ProcessSendButtonClick.Extension;
+using ProcessSendButtonClick.Model;
 
 namespace ProcessSendButtonClick
 {
@@ -17,26 +19,33 @@ namespace ProcessSendButtonClick
         public Main()
         {
             InitializeComponent();
+
+            CreatButtonListCheckBox();
             CreateProcessListCheckBox();
+        }
+
+        private void CreatButtonListCheckBox()
+        {
+            var buttonList = ButtonCode.ButtonList;
+
+            if (buttonList is not null)
+            {
+                cbButtonClick.DataSource = buttonList.ToComboBoxDataSource();
+                cbButtonClick.DisplayMember = "Text";
+                cbButtonClick.ValueMember = "Id";
+            }
         }
 
         private void CreateProcessListCheckBox()
         {
-            var processCollection = Process.GetProcesses();
-            var cbMemberList = processCollection.ToList().Select(x =>
-                new ComboBoxObj(
-                    x.Id,
-                    $"{x.ProcessName} - {x.Id}"
-                ))
-                .OrderBy(x => x.Text)
-                .ToArray();
+            var processList = Process.GetProcesses()?.ToComboBoxObjList();
 
-            cbProcessNameId.Items.Add(string.Empty);
-            cbProcessNameId.SelectedIndex = 0;
-
-            cbProcessNameId.DataSource = cbMemberList;
-            cbProcessNameId.DisplayMember = "Text";
-            cbProcessNameId.ValueMember = "Id";
+            if (processList is not null)
+            {
+                cbProcessNameId.DataSource = processList.ToComboBoxDataSource();
+                cbProcessNameId.DisplayMember = "Text";
+                cbProcessNameId.ValueMember = "Id";
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -61,27 +70,46 @@ namespace ProcessSendButtonClick
             }
             else
             {
-                if (cbProcessNameId.SelectedItem is ComboBoxObj selectedItem)
+                var (valid, process) = ValidateSelectedProcess();
+                if (valid)
                 {
                     var actualProcess = GetForegroundWindow();
-
-                    //getting notepad's process | at least one instance of notepad must be running
-                    var process = Process.GetProcessById(selectedItem.Id);
-
-                    if (process.MainWindowHandle != IntPtr.Zero)
-                    {
-                        SetForegroundWindow(process.MainWindowHandle);
-                        SendKeys.SendWait("{TAB}");
-                        SendKeys.SendWait("{TAB}");
-                        SendKeys.SendWait("{ENTER}");
-                        SendKeys.SendWait("CHEWBACCA");
-                        SendKeys.Flush();
-                    }
+                    SetForegroundWindow(process.MainWindowHandle);
+                    SendKeys.SendWait("{TAB}");
+                    SendKeys.SendWait("{TAB}");
+                    SendKeys.SendWait("{ENTER}");
+                    SendKeys.SendWait("CHEWBACCA");
+                    SendKeys.Flush();
 
                     if (actualProcess != IntPtr.Zero)
                         SetForegroundWindow(actualProcess);
                 }
             }
+        }
+
+        private void btnMaximize_Click(object sender, EventArgs e)
+        {
+            var (valid, process) = ValidateSelectedProcess();
+            if (valid)
+                SetForegroundWindow(process.MainWindowHandle);
+        }
+
+        internal (bool valid, Process process) ValidateSelectedProcess()
+        {
+            var returnValue = false;
+            var process = new Process();
+
+            if (cbProcessNameId.SelectedItem is ComboBoxObj selectedItem && !string.IsNullOrWhiteSpace(selectedItem.Id.ToString()))
+                if (int.TryParse(selectedItem.Id.ToString(), out var id))
+                {
+                    process = Process.GetProcessById(id);
+                    if (process is not null)
+                        returnValue = process.MainWindowHandle != IntPtr.Zero;
+                    else
+                        process = new Process();
+                }
+
+            return (returnValue, process);
         }
     }
 }

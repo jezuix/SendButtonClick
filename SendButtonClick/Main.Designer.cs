@@ -44,12 +44,18 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbButtonClick = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.chkRandomVariation = new System.Windows.Forms.CheckBox();
+            this.btnMaximize = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStartStop
             // 
-            this.btnStartStop.Location = new System.Drawing.Point(12, 461);
+            this.btnStartStop.Location = new System.Drawing.Point(12, 558);
             this.btnStartStop.Name = "btnStartStop";
             this.btnStartStop.Size = new System.Drawing.Size(647, 34);
             this.btnStartStop.TabIndex = 0;
@@ -63,7 +69,7 @@
             this.cbProcessNameId.FormattingEnabled = true;
             this.cbProcessNameId.Location = new System.Drawing.Point(12, 50);
             this.cbProcessNameId.Name = "cbProcessNameId";
-            this.cbProcessNameId.Size = new System.Drawing.Size(647, 33);
+            this.cbProcessNameId.Size = new System.Drawing.Size(529, 33);
             this.cbProcessNameId.TabIndex = 1;
             // 
             // label1
@@ -77,9 +83,9 @@
             // 
             // listViewAction
             // 
-            this.listViewAction.Location = new System.Drawing.Point(12, 215);
+            this.listViewAction.Location = new System.Drawing.Point(12, 265);
             this.listViewAction.Name = "listViewAction";
-            this.listViewAction.Size = new System.Drawing.Size(647, 240);
+            this.listViewAction.Size = new System.Drawing.Size(647, 287);
             this.listViewAction.TabIndex = 3;
             this.listViewAction.UseCompatibleStateImageBehavior = false;
             // 
@@ -143,7 +149,7 @@
             // 
             // txtPause
             // 
-            this.txtPause.Location = new System.Drawing.Point(187, 138);
+            this.txtPause.Location = new System.Drawing.Point(187, 184);
             this.txtPause.MaxLength = 1;
             this.txtPause.Name = "txtPause";
             this.txtPause.Size = new System.Drawing.Size(106, 31);
@@ -153,7 +159,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 140);
+            this.label3.Location = new System.Drawing.Point(12, 187);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(169, 25);
             this.label3.TabIndex = 11;
@@ -161,7 +167,7 @@
             // 
             // btnAddPause
             // 
-            this.btnAddPause.Location = new System.Drawing.Point(547, 136);
+            this.btnAddPause.Location = new System.Drawing.Point(547, 182);
             this.btnAddPause.Name = "btnAddPause";
             this.btnAddPause.Size = new System.Drawing.Size(112, 34);
             this.btnAddPause.TabIndex = 12;
@@ -171,7 +177,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 181);
+            this.label4.Location = new System.Drawing.Point(12, 231);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 25);
             this.label4.TabIndex = 14;
@@ -179,7 +185,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(263, 178);
+            this.textBox1.Location = new System.Drawing.Point(263, 228);
             this.textBox1.MaxLength = 1;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(106, 31);
@@ -190,10 +196,27 @@
             // label5
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(299, 152);
+            this.label5.Location = new System.Drawing.Point(299, 198);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(242, 2);
             this.label5.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 143);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 25);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Button Click";
+            // 
+            // cbButtonClick
+            // 
+            this.cbButtonClick.FormattingEnabled = true;
+            this.cbButtonClick.Location = new System.Drawing.Point(124, 136);
+            this.cbButtonClick.Name = "cbButtonClick";
+            this.cbButtonClick.Size = new System.Drawing.Size(355, 33);
+            this.cbButtonClick.TabIndex = 18;
             // 
             // label6
             // 
@@ -203,11 +226,54 @@
             this.label6.Size = new System.Drawing.Size(56, 2);
             this.label6.TabIndex = 16;
             // 
+            // label8
+            // 
+            this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label8.Location = new System.Drawing.Point(485, 151);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(56, 2);
+            this.label8.TabIndex = 19;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(547, 135);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(112, 34);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "Add";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // chkRandomVariation
+            // 
+            this.chkRandomVariation.AutoSize = true;
+            this.chkRandomVariation.Location = new System.Drawing.Point(375, 230);
+            this.chkRandomVariation.Name = "chkRandomVariation";
+            this.chkRandomVariation.Size = new System.Drawing.Size(213, 29);
+            this.chkRandomVariation.TabIndex = 21;
+            this.chkRandomVariation.Text = "Add random variation";
+            this.chkRandomVariation.UseVisualStyleBackColor = true;
+            // 
+            // btnMaximize
+            // 
+            this.btnMaximize.Location = new System.Drawing.Point(547, 48);
+            this.btnMaximize.Name = "btnMaximize";
+            this.btnMaximize.Size = new System.Drawing.Size(112, 34);
+            this.btnMaximize.TabIndex = 22;
+            this.btnMaximize.Text = "Maxmize";
+            this.btnMaximize.UseVisualStyleBackColor = true;
+            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 497);
+            this.ClientSize = new System.Drawing.Size(671, 604);
+            this.Controls.Add(this.btnMaximize);
+            this.Controls.Add(this.chkRandomVariation);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.cbButtonClick);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -250,6 +316,12 @@
         private Label label4;
         private TextBox textBox1;
         private Label label5;
+        private Label label7;
+        private ComboBox cbButtonClick;
         private Label label6;
+        private Label label8;
+        private Button button1;
+        private CheckBox chkRandomVariation;
+        private Button btnMaximize;
     }
 }

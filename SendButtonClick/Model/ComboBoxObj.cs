@@ -1,14 +1,14 @@
-﻿namespace ProcessSendButtonClick
+﻿namespace ProcessSendButtonClick.Model
 {
     public class ComboBoxObj
     {
-        public ComboBoxObj(int id, string text)
+        public ComboBoxObj(object id, string text)
         {
             Id = id;
             Text = text;
         }
 
-        public int Id { get; set; }
+        public object Id { get; set; }
         public string Text { get; set; }
     }
 }
