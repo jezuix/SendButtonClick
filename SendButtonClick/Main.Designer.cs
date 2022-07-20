@@ -31,7 +31,6 @@
             this.btnStartStop = new System.Windows.Forms.Button();
             this.cbProcessNameId = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.listViewAction = new System.Windows.Forms.ListView();
             this.label2 = new System.Windows.Forms.Label();
             this.txtButton = new System.Windows.Forms.TextBox();
             this.chkCtrl = new System.Windows.Forms.CheckBox();
@@ -42,15 +41,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddPause = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtUniversalPause = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.cbButtonClick = new System.Windows.Forms.ComboBox();
+            this.cbPreSetButtonClick = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAddPreSetButton = new System.Windows.Forms.Button();
             this.chkRandomVariation = new System.Windows.Forms.CheckBox();
             this.btnMaximize = new System.Windows.Forms.Button();
+            this.dgvButtonSequence = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvButtonSequence)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartStop
@@ -58,7 +59,7 @@
             this.btnStartStop.Location = new System.Drawing.Point(12, 558);
             this.btnStartStop.Name = "btnStartStop";
             this.btnStartStop.Size = new System.Drawing.Size(647, 34);
-            this.btnStartStop.TabIndex = 0;
+            this.btnStartStop.TabIndex = 13;
             this.btnStartStop.Text = "Start";
             this.btnStartStop.UseVisualStyleBackColor = true;
             this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
@@ -70,7 +71,7 @@
             this.cbProcessNameId.Location = new System.Drawing.Point(12, 50);
             this.cbProcessNameId.Name = "cbProcessNameId";
             this.cbProcessNameId.Size = new System.Drawing.Size(529, 33);
-            this.cbProcessNameId.TabIndex = 1;
+            this.cbProcessNameId.TabIndex = 0;
             // 
             // label1
             // 
@@ -80,14 +81,6 @@
             this.label1.Size = new System.Drawing.Size(157, 25);
             this.label1.TabIndex = 2;
             this.label1.Text = "Process Name - Id";
-            // 
-            // listViewAction
-            // 
-            this.listViewAction.Location = new System.Drawing.Point(12, 265);
-            this.listViewAction.Name = "listViewAction";
-            this.listViewAction.Size = new System.Drawing.Size(647, 287);
-            this.listViewAction.TabIndex = 3;
-            this.listViewAction.UseCompatibleStateImageBehavior = false;
             // 
             // label2
             // 
@@ -104,7 +97,7 @@
             this.txtButton.MaxLength = 1;
             this.txtButton.Name = "txtButton";
             this.txtButton.Size = new System.Drawing.Size(106, 31);
-            this.txtButton.TabIndex = 5;
+            this.txtButton.TabIndex = 2;
             this.txtButton.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // chkCtrl
@@ -113,7 +106,7 @@
             this.chkCtrl.Location = new System.Drawing.Point(236, 97);
             this.chkCtrl.Name = "chkCtrl";
             this.chkCtrl.Size = new System.Drawing.Size(97, 29);
-            this.chkCtrl.TabIndex = 6;
+            this.chkCtrl.TabIndex = 3;
             this.chkCtrl.Text = "Control";
             this.chkCtrl.UseVisualStyleBackColor = true;
             // 
@@ -123,7 +116,7 @@
             this.chkShift.Location = new System.Drawing.Point(339, 97);
             this.chkShift.Name = "chkShift";
             this.chkShift.Size = new System.Drawing.Size(74, 29);
-            this.chkShift.TabIndex = 7;
+            this.chkShift.TabIndex = 4;
             this.chkShift.Text = "Shift";
             this.chkShift.UseVisualStyleBackColor = true;
             // 
@@ -133,7 +126,7 @@
             this.chkAlt.Location = new System.Drawing.Point(419, 97);
             this.chkAlt.Name = "chkAlt";
             this.chkAlt.Size = new System.Drawing.Size(60, 29);
-            this.chkAlt.TabIndex = 8;
+            this.chkAlt.TabIndex = 5;
             this.chkAlt.Text = "Alt";
             this.chkAlt.UseVisualStyleBackColor = true;
             // 
@@ -142,19 +135,21 @@
             this.btnAddButton.Location = new System.Drawing.Point(547, 94);
             this.btnAddButton.Name = "btnAddButton";
             this.btnAddButton.Size = new System.Drawing.Size(112, 34);
-            this.btnAddButton.TabIndex = 9;
+            this.btnAddButton.TabIndex = 6;
             this.btnAddButton.Text = "Add";
             this.btnAddButton.UseVisualStyleBackColor = true;
-            this.btnAddButton.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAddButton.Click += new System.EventHandler(this.btnAddButton_Click);
             // 
             // txtPause
             // 
             this.txtPause.Location = new System.Drawing.Point(187, 184);
-            this.txtPause.MaxLength = 1;
+            this.txtPause.MaxLength = 5;
             this.txtPause.Name = "txtPause";
             this.txtPause.Size = new System.Drawing.Size(106, 31);
-            this.txtPause.TabIndex = 10;
+            this.txtPause.TabIndex = 9;
+            this.txtPause.Text = "1000";
             this.txtPause.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPause_KeyPress);
             // 
             // label3
             // 
@@ -170,9 +165,10 @@
             this.btnAddPause.Location = new System.Drawing.Point(547, 182);
             this.btnAddPause.Name = "btnAddPause";
             this.btnAddPause.Size = new System.Drawing.Size(112, 34);
-            this.btnAddPause.TabIndex = 12;
+            this.btnAddPause.TabIndex = 10;
             this.btnAddPause.Text = "Add";
             this.btnAddPause.UseVisualStyleBackColor = true;
+            this.btnAddPause.Click += new System.EventHandler(this.btnAddPause_Click);
             // 
             // label4
             // 
@@ -183,15 +179,16 @@
             this.label4.TabIndex = 14;
             this.label4.Text = "Universal Pause (milliseconds)";
             // 
-            // textBox1
+            // txtUniversalPause
             // 
-            this.textBox1.Location = new System.Drawing.Point(263, 228);
-            this.textBox1.MaxLength = 1;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(106, 31);
-            this.textBox1.TabIndex = 13;
-            this.textBox1.Text = "500";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUniversalPause.Location = new System.Drawing.Point(263, 228);
+            this.txtUniversalPause.MaxLength = 5;
+            this.txtUniversalPause.Name = "txtUniversalPause";
+            this.txtUniversalPause.Size = new System.Drawing.Size(106, 31);
+            this.txtUniversalPause.TabIndex = 11;
+            this.txtUniversalPause.Text = "50";
+            this.txtUniversalPause.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtUniversalPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUniversalPause_KeyPress);
             // 
             // label5
             // 
@@ -210,13 +207,13 @@
             this.label7.TabIndex = 17;
             this.label7.Text = "Button Click";
             // 
-            // cbButtonClick
+            // cbPreSetButtonClick
             // 
-            this.cbButtonClick.FormattingEnabled = true;
-            this.cbButtonClick.Location = new System.Drawing.Point(124, 136);
-            this.cbButtonClick.Name = "cbButtonClick";
-            this.cbButtonClick.Size = new System.Drawing.Size(355, 33);
-            this.cbButtonClick.TabIndex = 18;
+            this.cbPreSetButtonClick.FormattingEnabled = true;
+            this.cbPreSetButtonClick.Location = new System.Drawing.Point(124, 136);
+            this.cbPreSetButtonClick.Name = "cbPreSetButtonClick";
+            this.cbPreSetButtonClick.Size = new System.Drawing.Size(355, 33);
+            this.cbPreSetButtonClick.TabIndex = 7;
             // 
             // label6
             // 
@@ -234,22 +231,25 @@
             this.label8.Size = new System.Drawing.Size(56, 2);
             this.label8.TabIndex = 19;
             // 
-            // button1
+            // btnAddPreSetButton
             // 
-            this.button1.Location = new System.Drawing.Point(547, 135);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 34);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAddPreSetButton.Location = new System.Drawing.Point(547, 135);
+            this.btnAddPreSetButton.Name = "btnAddPreSetButton";
+            this.btnAddPreSetButton.Size = new System.Drawing.Size(112, 34);
+            this.btnAddPreSetButton.TabIndex = 8;
+            this.btnAddPreSetButton.Text = "Add";
+            this.btnAddPreSetButton.UseVisualStyleBackColor = true;
+            this.btnAddPreSetButton.Click += new System.EventHandler(this.btnAddPreSetButton_Click);
             // 
             // chkRandomVariation
             // 
             this.chkRandomVariation.AutoSize = true;
+            this.chkRandomVariation.Checked = true;
+            this.chkRandomVariation.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRandomVariation.Location = new System.Drawing.Point(375, 230);
             this.chkRandomVariation.Name = "chkRandomVariation";
             this.chkRandomVariation.Size = new System.Drawing.Size(213, 29);
-            this.chkRandomVariation.TabIndex = 21;
+            this.chkRandomVariation.TabIndex = 12;
             this.chkRandomVariation.Text = "Add random variation";
             this.chkRandomVariation.UseVisualStyleBackColor = true;
             // 
@@ -258,26 +258,39 @@
             this.btnMaximize.Location = new System.Drawing.Point(547, 48);
             this.btnMaximize.Name = "btnMaximize";
             this.btnMaximize.Size = new System.Drawing.Size(112, 34);
-            this.btnMaximize.TabIndex = 22;
+            this.btnMaximize.TabIndex = 1;
             this.btnMaximize.Text = "Maxmize";
             this.btnMaximize.UseVisualStyleBackColor = true;
-            this.btnMaximize.Click += new System.EventHandler(this.btnMaximize_Click);
+            this.btnMaximize.Click += new System.EventHandler(this.btnMaximizeProcess_Click);
+            // 
+            // dgvButtonSequence
+            // 
+            this.dgvButtonSequence.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvButtonSequence.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvButtonSequence.Location = new System.Drawing.Point(12, 265);
+            this.dgvButtonSequence.Name = "dgvButtonSequence";
+            this.dgvButtonSequence.RowHeadersWidth = 62;
+            this.dgvButtonSequence.RowTemplate.Height = 33;
+            this.dgvButtonSequence.Size = new System.Drawing.Size(647, 287);
+            this.dgvButtonSequence.TabIndex = 14;
+            this.dgvButtonSequence.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvButtonSequence_CellContentClick);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 604);
+            this.ClientSize = new System.Drawing.Size(671, 598);
+            this.Controls.Add(this.dgvButtonSequence);
             this.Controls.Add(this.btnMaximize);
             this.Controls.Add(this.chkRandomVariation);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAddPreSetButton);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.cbButtonClick);
+            this.Controls.Add(this.cbPreSetButtonClick);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtUniversalPause);
             this.Controls.Add(this.btnAddPause);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtPause);
@@ -287,12 +300,14 @@
             this.Controls.Add(this.chkCtrl);
             this.Controls.Add(this.txtButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.listViewAction);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbProcessNameId);
             this.Controls.Add(this.btnStartStop);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "Proccess Send Button Click";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvButtonSequence)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,7 +318,6 @@
         private Button btnStartStop;
         private ComboBox cbProcessNameId;
         private Label label1;
-        private ListView listViewAction;
         private Label label2;
         private TextBox txtButton;
         private CheckBox chkCtrl;
@@ -314,14 +328,15 @@
         private Label label3;
         private Button btnAddPause;
         private Label label4;
-        private TextBox textBox1;
+        private TextBox txtUniversalPause;
         private Label label5;
         private Label label7;
-        private ComboBox cbButtonClick;
+        private ComboBox cbPreSetButtonClick;
         private Label label6;
         private Label label8;
-        private Button button1;
+        private Button btnAddPreSetButton;
         private CheckBox chkRandomVariation;
         private Button btnMaximize;
+        private DataGridView dgvButtonSequence;
     }
 }
