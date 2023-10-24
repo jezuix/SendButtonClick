@@ -10,8 +10,9 @@ namespace ProcessSendButtonClick.Model
         public bool? Alt { get; set; }
         public string Value { get; set; }
         public EventType EventType { get; set; }
+        public bool Editable { get; set; }
 
-        public DataGridViewObj(string text, bool? control, bool? shift, bool? alt, string value, EventType eventType)
+        public DataGridViewObj(string text, bool? control, bool? shift, bool? alt, string value, EventType eventType, bool editable = true)
         {
             Text = text;
             Control = control;
@@ -19,6 +20,7 @@ namespace ProcessSendButtonClick.Model
             Alt = alt;
             Value = value;
             EventType = eventType;
+            Editable = editable;
         }
     }
 }

@@ -6,7 +6,9 @@
         {
             ButtonClick,
             PreSetButtonClick,
-            Pause
+            Pause,
+            LoopIni,
+            LoopEnd
         }
     }
 }

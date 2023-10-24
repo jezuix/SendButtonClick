@@ -5,13 +5,11 @@ namespace ProcessSendButtonClick.Extension
 {
     public static class ProcessExtension
     {
-        public static List<ComboBoxObj> ToComboBoxObjList(this Process[] processCollection)
+        public static IList<ComboBoxObj> ToComboBoxObjList(this Process[] processCollection)
         {
-            return processCollection.ToList().Select(x =>
-                new ComboBoxObj(
-                    x.Id,
-                    $"{x.ProcessName} - {x.Id}"
-                ))
+            return processCollection
+                .Where(x => x.MainWindowHandle != IntPtr.Zero)
+                .Select(x => new ComboBoxObj(x.Id, $"{x.ProcessName} - {x.Id}"))
                 .OrderBy(x => x.Text)
                 .ToList();
         }

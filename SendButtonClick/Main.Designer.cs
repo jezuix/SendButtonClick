@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnStartStop = new System.Windows.Forms.Button();
-            this.cbProcessNameId = new System.Windows.Forms.ComboBox();
+            this.ddlProcessNameId = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtButton = new System.Windows.Forms.TextBox();
@@ -51,12 +51,17 @@
             this.chkRandomVariation = new System.Windows.Forms.CheckBox();
             this.btnMaximize = new System.Windows.Forms.Button();
             this.dgvButtonSequence = new System.Windows.Forms.DataGridView();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtLoop = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnAddLoop = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvButtonSequence)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStartStop
             // 
-            this.btnStartStop.Location = new System.Drawing.Point(12, 558);
+            this.btnStartStop.Location = new System.Drawing.Point(12, 619);
             this.btnStartStop.Name = "btnStartStop";
             this.btnStartStop.Size = new System.Drawing.Size(647, 34);
             this.btnStartStop.TabIndex = 13;
@@ -64,14 +69,15 @@
             this.btnStartStop.UseVisualStyleBackColor = true;
             this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
             // 
-            // cbProcessNameId
+            // ddlProcessNameId
             // 
-            this.cbProcessNameId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbProcessNameId.FormattingEnabled = true;
-            this.cbProcessNameId.Location = new System.Drawing.Point(12, 50);
-            this.cbProcessNameId.Name = "cbProcessNameId";
-            this.cbProcessNameId.Size = new System.Drawing.Size(529, 33);
-            this.cbProcessNameId.TabIndex = 0;
+            this.ddlProcessNameId.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlProcessNameId.FormattingEnabled = true;
+            this.ddlProcessNameId.Location = new System.Drawing.Point(175, 5);
+            this.ddlProcessNameId.Name = "ddlProcessNameId";
+            this.ddlProcessNameId.Size = new System.Drawing.Size(366, 33);
+            this.ddlProcessNameId.TabIndex = 0;
+            this.ddlProcessNameId.Click += new System.EventHandler(this.ddlProcessNameId_Click);
             // 
             // label1
             // 
@@ -85,7 +91,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 99);
+            this.label2.Location = new System.Drawing.Point(12, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(106, 25);
             this.label2.TabIndex = 4;
@@ -93,7 +99,7 @@
             // 
             // txtButton
             // 
-            this.txtButton.Location = new System.Drawing.Point(124, 96);
+            this.txtButton.Location = new System.Drawing.Point(124, 51);
             this.txtButton.MaxLength = 1;
             this.txtButton.Name = "txtButton";
             this.txtButton.Size = new System.Drawing.Size(106, 31);
@@ -103,7 +109,7 @@
             // chkCtrl
             // 
             this.chkCtrl.AutoSize = true;
-            this.chkCtrl.Location = new System.Drawing.Point(236, 97);
+            this.chkCtrl.Location = new System.Drawing.Point(236, 52);
             this.chkCtrl.Name = "chkCtrl";
             this.chkCtrl.Size = new System.Drawing.Size(97, 29);
             this.chkCtrl.TabIndex = 3;
@@ -113,7 +119,7 @@
             // chkShift
             // 
             this.chkShift.AutoSize = true;
-            this.chkShift.Location = new System.Drawing.Point(339, 97);
+            this.chkShift.Location = new System.Drawing.Point(339, 52);
             this.chkShift.Name = "chkShift";
             this.chkShift.Size = new System.Drawing.Size(74, 29);
             this.chkShift.TabIndex = 4;
@@ -123,7 +129,7 @@
             // chkAlt
             // 
             this.chkAlt.AutoSize = true;
-            this.chkAlt.Location = new System.Drawing.Point(419, 97);
+            this.chkAlt.Location = new System.Drawing.Point(419, 52);
             this.chkAlt.Name = "chkAlt";
             this.chkAlt.Size = new System.Drawing.Size(60, 29);
             this.chkAlt.TabIndex = 5;
@@ -132,7 +138,7 @@
             // 
             // btnAddButton
             // 
-            this.btnAddButton.Location = new System.Drawing.Point(547, 94);
+            this.btnAddButton.Location = new System.Drawing.Point(547, 49);
             this.btnAddButton.Name = "btnAddButton";
             this.btnAddButton.Size = new System.Drawing.Size(112, 34);
             this.btnAddButton.TabIndex = 6;
@@ -142,7 +148,7 @@
             // 
             // txtPause
             // 
-            this.txtPause.Location = new System.Drawing.Point(187, 184);
+            this.txtPause.Location = new System.Drawing.Point(187, 140);
             this.txtPause.MaxLength = 5;
             this.txtPause.Name = "txtPause";
             this.txtPause.Size = new System.Drawing.Size(106, 31);
@@ -154,7 +160,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 187);
+            this.label3.Location = new System.Drawing.Point(12, 143);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(169, 25);
             this.label3.TabIndex = 11;
@@ -162,7 +168,7 @@
             // 
             // btnAddPause
             // 
-            this.btnAddPause.Location = new System.Drawing.Point(547, 182);
+            this.btnAddPause.Location = new System.Drawing.Point(547, 138);
             this.btnAddPause.Name = "btnAddPause";
             this.btnAddPause.Size = new System.Drawing.Size(112, 34);
             this.btnAddPause.TabIndex = 10;
@@ -173,7 +179,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 231);
+            this.label4.Location = new System.Drawing.Point(12, 248);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(245, 25);
             this.label4.TabIndex = 14;
@@ -181,7 +187,7 @@
             // 
             // txtUniversalPause
             // 
-            this.txtUniversalPause.Location = new System.Drawing.Point(263, 228);
+            this.txtUniversalPause.Location = new System.Drawing.Point(263, 245);
             this.txtUniversalPause.MaxLength = 5;
             this.txtUniversalPause.Name = "txtUniversalPause";
             this.txtUniversalPause.Size = new System.Drawing.Size(106, 31);
@@ -189,11 +195,12 @@
             this.txtUniversalPause.Text = "50";
             this.txtUniversalPause.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtUniversalPause.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtUniversalPause_KeyPress);
+            this.txtUniversalPause.Leave += new System.EventHandler(this.txtUniversalPause_Leave);
             // 
             // label5
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(299, 198);
+            this.label5.Location = new System.Drawing.Point(299, 154);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(242, 2);
             this.label5.TabIndex = 15;
@@ -201,24 +208,24 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 143);
+            this.label7.Location = new System.Drawing.Point(12, 99);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 25);
+            this.label7.Size = new System.Drawing.Size(192, 25);
             this.label7.TabIndex = 17;
-            this.label7.Text = "Button Click";
+            this.label7.Text = "Pre Setted Button Click";
             // 
             // cbPreSetButtonClick
             // 
             this.cbPreSetButtonClick.FormattingEnabled = true;
-            this.cbPreSetButtonClick.Location = new System.Drawing.Point(124, 136);
+            this.cbPreSetButtonClick.Location = new System.Drawing.Point(210, 95);
             this.cbPreSetButtonClick.Name = "cbPreSetButtonClick";
-            this.cbPreSetButtonClick.Size = new System.Drawing.Size(355, 33);
+            this.cbPreSetButtonClick.Size = new System.Drawing.Size(269, 33);
             this.cbPreSetButtonClick.TabIndex = 7;
             // 
             // label6
             // 
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label6.Location = new System.Drawing.Point(485, 110);
+            this.label6.Location = new System.Drawing.Point(485, 65);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(56, 2);
             this.label6.TabIndex = 16;
@@ -226,14 +233,14 @@
             // label8
             // 
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label8.Location = new System.Drawing.Point(485, 151);
+            this.label8.Location = new System.Drawing.Point(485, 110);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 2);
             this.label8.TabIndex = 19;
             // 
             // btnAddPreSetButton
             // 
-            this.btnAddPreSetButton.Location = new System.Drawing.Point(547, 135);
+            this.btnAddPreSetButton.Location = new System.Drawing.Point(547, 94);
             this.btnAddPreSetButton.Name = "btnAddPreSetButton";
             this.btnAddPreSetButton.Size = new System.Drawing.Size(112, 34);
             this.btnAddPreSetButton.TabIndex = 8;
@@ -246,7 +253,7 @@
             this.chkRandomVariation.AutoSize = true;
             this.chkRandomVariation.Checked = true;
             this.chkRandomVariation.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkRandomVariation.Location = new System.Drawing.Point(375, 230);
+            this.chkRandomVariation.Location = new System.Drawing.Point(375, 247);
             this.chkRandomVariation.Name = "chkRandomVariation";
             this.chkRandomVariation.Size = new System.Drawing.Size(213, 29);
             this.chkRandomVariation.TabIndex = 12;
@@ -255,7 +262,7 @@
             // 
             // btnMaximize
             // 
-            this.btnMaximize.Location = new System.Drawing.Point(547, 48);
+            this.btnMaximize.Location = new System.Drawing.Point(547, 4);
             this.btnMaximize.Name = "btnMaximize";
             this.btnMaximize.Size = new System.Drawing.Size(112, 34);
             this.btnMaximize.TabIndex = 1;
@@ -265,21 +272,77 @@
             // 
             // dgvButtonSequence
             // 
+            this.dgvButtonSequence.AllowDrop = true;
+            this.dgvButtonSequence.AllowUserToResizeColumns = false;
+            this.dgvButtonSequence.AllowUserToResizeRows = false;
             this.dgvButtonSequence.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvButtonSequence.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvButtonSequence.Location = new System.Drawing.Point(12, 265);
+            this.dgvButtonSequence.Location = new System.Drawing.Point(12, 282);
+            this.dgvButtonSequence.MultiSelect = false;
             this.dgvButtonSequence.Name = "dgvButtonSequence";
+            this.dgvButtonSequence.ReadOnly = true;
             this.dgvButtonSequence.RowHeadersWidth = 62;
             this.dgvButtonSequence.RowTemplate.Height = 33;
-            this.dgvButtonSequence.Size = new System.Drawing.Size(647, 287);
+            this.dgvButtonSequence.Size = new System.Drawing.Size(647, 331);
             this.dgvButtonSequence.TabIndex = 14;
             this.dgvButtonSequence.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvButtonSequence_CellContentClick);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 188);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(105, 25);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "Action loop";
+            // 
+            // txtLoop
+            // 
+            this.txtLoop.Location = new System.Drawing.Point(123, 185);
+            this.txtLoop.MaxLength = 3;
+            this.txtLoop.Name = "txtLoop";
+            this.txtLoop.Size = new System.Drawing.Size(106, 31);
+            this.txtLoop.TabIndex = 21;
+            this.txtLoop.Text = "10";
+            this.txtLoop.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtLoop.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLoop_KeyPress);
+            // 
+            // label10
+            // 
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label10.Location = new System.Drawing.Point(235, 203);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(306, 1);
+            this.label10.TabIndex = 22;
+            // 
+            // btnAddLoop
+            // 
+            this.btnAddLoop.Location = new System.Drawing.Point(547, 184);
+            this.btnAddLoop.Name = "btnAddLoop";
+            this.btnAddLoop.Size = new System.Drawing.Size(112, 34);
+            this.btnAddLoop.TabIndex = 23;
+            this.btnAddLoop.Text = "Add";
+            this.btnAddLoop.UseVisualStyleBackColor = true;
+            this.btnAddLoop.Click += new System.EventHandler(this.btnAddLoop_Click);
+            // 
+            // label11
+            // 
+            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label11.Location = new System.Drawing.Point(12, 232);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(647, 1);
+            this.label11.TabIndex = 24;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(671, 598);
+            this.ClientSize = new System.Drawing.Size(671, 662);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.btnAddLoop);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.txtLoop);
+            this.Controls.Add(this.label9);
             this.Controls.Add(this.dgvButtonSequence);
             this.Controls.Add(this.btnMaximize);
             this.Controls.Add(this.chkRandomVariation);
@@ -301,7 +364,7 @@
             this.Controls.Add(this.txtButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.cbProcessNameId);
+            this.Controls.Add(this.ddlProcessNameId);
             this.Controls.Add(this.btnStartStop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
@@ -316,7 +379,7 @@
         #endregion
 
         private Button btnStartStop;
-        private ComboBox cbProcessNameId;
+        private ComboBox ddlProcessNameId;
         private Label label1;
         private Label label2;
         private TextBox txtButton;
@@ -338,5 +401,10 @@
         private CheckBox chkRandomVariation;
         private Button btnMaximize;
         private DataGridView dgvButtonSequence;
+        private Label label9;
+        private TextBox txtLoop;
+        private Label label10;
+        private Button btnAddLoop;
+        private Label label11;
     }
 }

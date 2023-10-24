@@ -21,20 +21,50 @@ namespace ProcessSendButtonClick
         private IList<DataGridViewObj> ListButtonSequence { get; set; } = new List<DataGridViewObj>();
         private int EditedIndex { get; set; } = -1;
 
+        private CancellationTokenSource cts;
+        private bool startedLoop = false;
+
+        private const string pauseDefault = "1000";
+        private int pauseIntDefault = int.Parse(pauseDefault);
+        private const string actionLoopDefault = "10";
+        private const string universalPauseDefault = "50";
+        private int universalPauseIntDefault = int.Parse(universalPauseDefault);
+
         public Main()
         {
             InitializeComponent();
 
-            CreatButtonListCheckBox();
             CreateProcessListCheckBox();
+            CreatButtonListCheckBox();
             CreateDataGridView();
+
+            ClearAll();
         }
 
         #region Events
 
+        #region Process Name
+
+        private void ddlProcessNameId_Click(object sender, EventArgs e)
+        {
+            CreateProcessListCheckBox();
+        }
+
+        private void btnMaximizeProcess_Click(object sender, EventArgs e)
+        {
+            var (valid, process) = ValidateSelectedProcess();
+            if (valid)
+                SetForegroundWindow(process.MainWindowHandle);
+            else
+                SetErrorAlert(ddlProcessNameId);
+        }
+
+        #endregion
+
+        #region Button Click
+
         private void btnAddButton_Click(object sender, EventArgs e)
         {
-            txtButton.BackColor = Color.White;
             if (!string.IsNullOrWhiteSpace(txtButton.Text))
             {
                 if (EditedIndex < 0)
@@ -44,9 +74,11 @@ namespace ProcessSendButtonClick
 
                 ClearAll();
             }
-            else
-                txtButton.BackColor = Color.Red;
         }
+
+        #endregion
+
+        #region Pre setted Button Click
 
         private void btnAddPreSetButton_Click(object sender, EventArgs e)
         {
@@ -62,6 +94,15 @@ namespace ProcessSendButtonClick
             }
             else
                 cbPreSetButtonClick.BackColor = Color.Red;
+        }
+
+        #endregion
+
+        #region Pause
+
+        private void txtPause_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !ValidateKeyPressIsValidNumber(e);
         }
 
         private void btnAddPause_Click(object sender, EventArgs e)
@@ -80,47 +121,41 @@ namespace ProcessSendButtonClick
                 txtPause.BackColor = Color.Red;
         }
 
-        private void btnStartStop_Click(object sender, EventArgs e)
-        {
-            if (cbProcessNameId.SelectedIndex == 1)
-            {
-                MessageBox.Show("Select a process to send a button click", "Missing configuration", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                var (valid, process) = ValidateSelectedProcess();
-                if (valid)
-                {
-                    var actualProcess = GetForegroundWindow();
-                    SetForegroundWindow(process.MainWindowHandle);
-                    SendKeys.SendWait("{TAB}");
-                    SendKeys.SendWait("{TAB}");
-                    SendKeys.SendWait("{ENTER}");
-                    SendKeys.SendWait("CHEWBACCA");
-                    SendKeys.Flush();
+        #endregion
 
-                    if (actualProcess != IntPtr.Zero)
-                        SetForegroundWindow(actualProcess);
-                }
-            }
-        }
+        #region Action Loop
 
-        private void btnMaximizeProcess_Click(object sender, EventArgs e)
-        {
-            var (valid, process) = ValidateSelectedProcess();
-            if (valid)
-                SetForegroundWindow(process.MainWindowHandle);
-        }
-
-        private void txtPause_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtLoop_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !ValidateKeyPressIsValidNumber(e);
         }
+
+        private void btnAddLoop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region Universal Pause (Pause inner events)
 
         private void txtUniversalPause_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !ValidateKeyPressIsValidNumber(e);
         }
+
+        private void txtUniversalPause_Leave(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtUniversalPause.Text, out var universalPause))
+                universalPause = 0;
+
+            if (universalPause < 50)
+                txtUniversalPause.Text = universalPauseDefault;
+        }
+
+        #endregion
+
+        #region DataGrid
 
         private void dgvButtonSequence_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -155,7 +190,57 @@ namespace ProcessSendButtonClick
 
         #endregion
 
-        #region Methods
+        #region Start/Stop Button
+
+        private void btnStartStop_Click(object sender, EventArgs e)
+        {
+            if (ddlProcessNameId.SelectedIndex == 1)
+            {
+                MessageBox.Show("Select a process to send a button click", "Missing configuration", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                if (startedLoop)
+                {
+                    cts.Cancel();
+                    btnStartStop.Text = "Start";
+                    startedLoop = false;
+                }
+                else
+                {
+                    var (valid, process) = ValidateSelectedProcess();
+                    if (valid)
+                    {
+                        cts = new CancellationTokenSource();
+                        Task.Run(async () => await ExecuteButtonSequence(process, cts.Token));
+
+                        btnStartStop.Text = "Stop";
+                        startedLoop = true;
+                    }
+                }
+
+                ChangeAllEnabled(!startedLoop);
+                ddlProcessNameId.Enabled = !startedLoop;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Geral Methods
+
+        private void CreateProcessListCheckBox()
+        {
+            var processList = Process.GetProcesses()?.ToComboBoxObjList();
+
+            if (processList is not null)
+            {
+                ddlProcessNameId.DataSource = processList.ToComboBoxDataSource();
+                ddlProcessNameId.DisplayMember = "Text";
+                ddlProcessNameId.ValueMember = "Id";
+            }
+        }
 
         private void CreatButtonListCheckBox()
         {
@@ -166,18 +251,6 @@ namespace ProcessSendButtonClick
                 cbPreSetButtonClick.DataSource = buttonList.ToComboBoxDataSource();
                 cbPreSetButtonClick.DisplayMember = "Text";
                 cbPreSetButtonClick.ValueMember = "Id";
-            }
-        }
-
-        private void CreateProcessListCheckBox()
-        {
-            var processList = Process.GetProcesses()?.ToComboBoxObjList();
-
-            if (processList is not null)
-            {
-                cbProcessNameId.DataSource = processList.ToComboBoxDataSource();
-                cbProcessNameId.DisplayMember = "Text";
-                cbProcessNameId.ValueMember = "Id";
             }
         }
 
@@ -274,16 +347,19 @@ namespace ProcessSendButtonClick
         private void UpdateDataGridView()
         {
             dgvButtonSequence.DataSource = new BindingList<DataGridViewObj>(ListButtonSequence);
-            //UseCheckBoxForNullableBool(dgvButtonSequence);
             dgvButtonSequence.Update();
         }
+
+        #endregion
+
+        #region Validation Methods
 
         private (bool valid, Process process) ValidateSelectedProcess()
         {
             var returnValue = false;
             var process = new Process();
 
-            if (cbProcessNameId.SelectedItem is ComboBoxObj selectedItem && !string.IsNullOrWhiteSpace(selectedItem.Id.ToString()))
+            if (ddlProcessNameId.SelectedItem is ComboBoxObj selectedItem && !string.IsNullOrWhiteSpace(selectedItem.Id.ToString()))
                 if (int.TryParse(selectedItem.Id.ToString(), out var id))
                 {
                     process = Process.GetProcessById(id);
@@ -295,6 +371,13 @@ namespace ProcessSendButtonClick
 
             return (returnValue, process);
         }
+
+        private bool ValidateKeyPressIsValidNumber(KeyPressEventArgs e)
+        {
+            return char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar);
+        }
+
+        #endregion
 
         private void EditButtonClick()
         {
@@ -342,7 +425,7 @@ namespace ProcessSendButtonClick
 
         private void DeleteButtonClick(int rowIndex)
         {
-            var dialogResult = MessageBox.Show("Desire delete this row?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var dialogResult = MessageBox.Show("Are you sure you want to delete this row?", "Delete confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
                 ListButtonSequence.RemoveAt(rowIndex);
 
@@ -427,6 +510,8 @@ namespace ProcessSendButtonClick
             btnAddPreSetButton.Enabled = enabled;
             txtPause.Enabled = enabled;
             btnAddPause.Enabled = enabled;
+            txtLoop.Enabled = enabled;
+            btnAddLoop.Enabled = enabled;
         }
 
         private void ChangeAllButtonAddEditName()
@@ -445,7 +530,20 @@ namespace ProcessSendButtonClick
             chkShift.Checked = false;
             chkAlt.Checked = false;
             cbPreSetButtonClick.SelectedIndex = 0;
-            txtPause.Text = "1000";
+
+            txtPause.Text = pauseDefault;
+            txtLoop.Text = actionLoopDefault;
+            txtUniversalPause.Text = universalPauseDefault;
+        }
+
+        private void ClearErrorAlert()
+        {
+            Controls.Cast<Control>().ToList().ForEach(c => c.BackColor = Color.White);
+        }
+
+        private void SetErrorAlert(Control control, Color? color = null)
+        {
+            control.BackColor = color ?? Color.Red;
         }
 
         private void ClearAll()
@@ -453,15 +551,66 @@ namespace ProcessSendButtonClick
             ChangeAllEnabled(true);
             ChangeAllButtonAddEditName();
             ClearAllItens();
+            ClearErrorAlert();
 
             EditedIndex = -1;
         }
 
-        private bool ValidateKeyPressIsValidNumber(KeyPressEventArgs e)
+        private async Task ExecuteButtonSequence(Process process, CancellationToken ct)
         {
-            return char.IsControl(e.KeyChar) || char.IsDigit(e.KeyChar);
-        }
+            while (!ct.IsCancellationRequested)
+            {
+                for (int i = 0; i < ListButtonSequence.Count; i++)
+                {
+                    var item = ListButtonSequence[i];
+                    var loopControl = new Dictionary<string, int>();
 
-        #endregion
+                    var actualProcess = GetForegroundWindow();
+                    Console.WriteLine(actualProcess);
+
+                    switch (item.EventType)
+                    {
+                        case EventType.ButtonClick:
+                        case EventType.PreSetButtonClick:
+                            string keypess = string.Empty;
+
+                            if (item.Shift.HasValue && item.Shift.Value)
+                                keypess += "+";
+                            if (item.Control.HasValue && item.Control.Value)
+                                keypess += "^";
+                            if (item.Alt.HasValue && item.Alt.Value)
+                                keypess += "%";
+
+                            keypess += item.Value;
+
+                            SetForegroundWindow(process.MainWindowHandle);
+                            SendKeys.SendWait($"{keypess}");
+                            SendKeys.Flush();
+
+                            if (actualProcess != IntPtr.Zero && actualProcess != process.MainWindowHandle)
+                                SetForegroundWindow(actualProcess);
+                            break;
+                        case EventType.Pause:
+                            if (int.TryParse(item.Value, out var pauseTime))
+                                Thread.Sleep(pauseTime);
+                            break;
+                        case EventType.LoopIni:
+                            break;
+                        case EventType.LoopEnd:
+                            break;
+                        default:
+                            break;
+                    }
+
+                    var _ = int.TryParse(txtUniversalPause.Text, out int universalPause);
+
+                    Thread.Sleep(universalPause < universalPauseIntDefault ? universalPauseIntDefault : universalPause);
+                }
+
+                if (ListButtonSequence.Where(x => x.EventType == EventType.Pause).Sum(x => int.Parse(x.Value)) < pauseIntDefault)
+                    Thread.Sleep(pauseIntDefault);
+            }
+
+        }
     }
 }

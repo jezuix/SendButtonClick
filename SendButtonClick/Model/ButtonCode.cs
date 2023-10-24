@@ -2,7 +2,7 @@
 {
     static public class ButtonCode
     {
-        public static List<ComboBoxObj> ButtonList
+        public static IList<ComboBoxObj> ButtonList
         {
             get
             {
